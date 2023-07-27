@@ -7,4 +7,5 @@
 - option to restore previous analysis, using 'r' key 
 
 ## Older
+Summary of pre-GitHub changes
 
