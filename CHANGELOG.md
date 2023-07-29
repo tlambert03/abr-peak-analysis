@@ -1,10 +1,11 @@
-# Change Log
+## Change Log
  
 ### v1.8.0 (2023-07-26)
   
 #### Added
 - option to restore previous analysis, using **R** key 
 
+---
 
 ### Older
 Summary of pre-GitHub changes
