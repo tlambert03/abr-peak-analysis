@@ -16,7 +16,7 @@ Summary of pre-GitHub changes
 | 1.7.0.70 | 2023-01-26 | Added noise floor option. |
 | 1.6.1.69 | 2022-12-16 | Account for zero position in IHS data |
 | 1.6.0.67 | 2022-12-09 | -made extension check case-insensitive<br>-added .anx and .txt filters to open file dialog<br>-fixed option to load multiple files through the dialog<br>-explicitly scale x-axis of work plot |
-| 1.6.0.65 | 2022-12-07 | updated to Anaconda Python 3.9 |
+| 1.6.0.65 | 2022-12-07 | - updated to Anaconda Python 3.9<br>- added code to read ANECS data |
 | 1.5.8.62 | 2021-08-21 | - added file extension option<br>- added export filtered waveforms option<br>- crashed in Windows, if saved startdir didn't exist. Config file path not created correctly (missing file separator) |
 | 1.5.7.61 | 2021-01-21 | fixed bug exporting data with only one trace |
 | 1.5.7.60 | 2019-11-12 | rehabilitated text file read |
