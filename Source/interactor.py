@@ -12,7 +12,9 @@ class KeyInteractor(object):
             wx.WXK_RETURN:  'return',
             43:             'plus',
             45:             'minus', 
-            61:             'plus'    # Mac            
+            61:             'plus',   # Mac            
+            388:            'plus',   # numeric keypad
+            390:            'minus'   # numeric keypad
  
         }
 
@@ -102,7 +104,18 @@ class WaveformInteractor(KeyInteractor):
         self.presenter.save()
 
     def ku_r(self):
-        self.presenter.restore()
+        dlg = wx.MessageDialog(None, 'Restoring the previous analysis will lose the current work on this data set.\nContinue?',
+              'Question', wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+        response = dlg.ShowModal()
+        if response == wx.ID_YES:
+            self.presenter.restore()
+
+    def ku_x(self):
+        dlg = wx.MessageDialog(None, 'This will clear the current work on this data set.\nContinue?',
+              'Question', wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+        response = dlg.ShowModal()
+        if response == wx.ID_YES:
+            self.presenter.clear_analysis()
 
     def ku_p(self):
         self.presenter.invert()

@@ -307,7 +307,9 @@ class abrseries(sortedseries):
         if not self.threshold == threshold:
             self.__threshold = threshold
             for w in self.series:
-                if (w.level >= threshold and not self.varymasker) or (w.level <= threshold and self.varymasker):
+                if threshold is None:
+                    w.threshold = Th.UNK
+                elif (w.level >= threshold and not self.varymasker) or (w.level <= threshold and self.varymasker):
                     w.threshold = Th.SUPRA
                 elif w.level == threshold:
                     w.threshold = Th.TH

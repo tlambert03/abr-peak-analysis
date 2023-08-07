@@ -69,6 +69,13 @@ class WaveformPresenter(object):
         self.current = len(self.model.series)-1
         self.update_labels()
 
+        # restore analysis if auto option is enabled and file exists        
+        restore = DefaultValueHolder("PhysiologyNotebook", "autoRestore")
+        restore.SetVariables(value=False)
+        restore.InitFromConfig()
+        if restore.value and peakio.have_stored_analysis((self.model)):
+            self.restore()
+
     def delete(self):
         self.plots[self.current].remove()
         del self.plots[self.current]
@@ -101,6 +108,20 @@ class WaveformPresenter(object):
         self.N = True
         self._plotupdate = True
 
+    def clear_analysis(self):
+        self.model.threshold = None
+        self.N = False
+        for w in self.model.series:
+            w.points = {}
+        for p in self.plots:
+            p.clear_points()
+
+
+        self.guess_p()
+            
+        self.view.GetTopLevelParent().SetStatusText('')
+        self._plotupdate = True
+
 
     def update(self):
         if self._plotupdate:
@@ -120,9 +141,11 @@ class WaveformPresenter(object):
                 xMax = self.model.Tmax
                 
             self.view.subplot.axis(xmax=xMax)
+            if self.ann != None:
+                self.ann.remove()
+                self.ann = None
+                
             if not self.model.threshold is None:
-                if self.ann != None:
-                    self.ann.remove()
                 
                 self.ann = self.view.subplot.annotate('', 
                                            xy=(0, self.model.threshold), xycoords='data',
@@ -142,6 +165,8 @@ class WaveformPresenter(object):
             
             elif self.model.thresholdEstimationFailed:
                 self.view.subplot.set_title("Automatic threshold estimation failed", loc='left')
+            else:
+                self.view.subplot.set_title('', loc='Left')
                 
                 
             if self.showWork or self.showIO:

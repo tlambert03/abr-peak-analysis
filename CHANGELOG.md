@@ -1,5 +1,15 @@
 ## Change Log
+
+### v1.9.0 (2023-08-06)
+  
+#### Added
+- checkbox on Options gui to automatically restore previous analysis when loading data (default = True)
+- clear analysis using **X** key (restarts from default peak guess)
+- File menu options to clear all tabs and clear all but selected tabs
+- use of numeric keypad +/- keys to scale waveforms
  
+---
+
 ### v1.8.0 (2023-07-26)
   
 #### Added

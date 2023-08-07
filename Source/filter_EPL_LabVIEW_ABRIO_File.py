@@ -175,6 +175,14 @@ def save(model):
 
     return 'Saved data to %s' % filename
 
+def have_stored_analysis(model):
+    extension = DefaultValueHolder("PhysiologyNotebook", "extension")
+    extension.SetVariables(value='txt')
+    extension.InitFromConfig()
+    filename = model.filename + '-analyzed.' + extension.value
+    
+    return os.path.isfile(filename)
+
 def restore_analysis(model):
     extension = DefaultValueHolder("PhysiologyNotebook", "extension")
     extension.SetVariables(value='txt')
