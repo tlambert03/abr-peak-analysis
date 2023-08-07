@@ -145,18 +145,30 @@ pre {
 }
 .ts3 {
   font-family: Tahoma;
+  font-size: 12pt;
 }
 .ts4 {
-  font-family: Verdana;
+  font-family: 'Courier New';
+  background-color: #d6d4ca;
 }
 .ts5 {
+  font-family: Tahoma;
+}
+.ts6 {
+  font-family: Verdana;
+}
+.ts7 {
   font-family: Tahoma;
   font-size: 13pt;
   font-weight: bold;
 }
-.ts6 {
+.ts8 {
   font-family: Tahoma;
   font-weight: bold;
+}
+.ts9 {
+  font-family: Tahoma;
+  font-style: italic;
 }
 .hd0 {
   padding-top: 2px;
@@ -184,6 +196,7 @@ pre {
 .ps1 {
   padding-right: 5px;
   text-align: right;
+  font-size: 8pt;
 }
 .ps2 {
   font-size: 4pt;
@@ -193,20 +206,23 @@ pre {
   padding-bottom: 21.4666666666667px;
 }
 .ps4 {
-  font-size: 8pt;
+  font-size: 11pt;
 }
 .ps5 {
+  font-size: 8pt;
+}
+.ps6 {
   padding-top: 16px;
   padding-bottom: 16px;
 }
-.ps6 {
+.ps7 {
   padding-bottom: 16px;
 }
-.ps7 {
+.ps8 {
   padding-left: 0.5in;
   text-indent: -0.251968503937008in;
 }
-.ps8 {
+.ps9 {
   padding-bottom: 16px;
   padding-left: 0.5in;
   text-indent: -0.251968503937008in;

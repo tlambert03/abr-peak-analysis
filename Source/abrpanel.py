@@ -281,6 +281,12 @@ class WaveformPlot(StylePlot):
         except AttributeError:
             pass
 
+    def clear_points(self):
+        for p in self.points.values():
+            p.remove()
+        self.points = {}
+        
+
     def update(self):
         self._plot()
         self._updatestyle()

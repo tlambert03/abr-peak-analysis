@@ -250,12 +250,16 @@ class PhysiologyFrame(PersistentFrame):
         ID_SET_DIR = wx.NewId()
         ID_SET_OPTIONS = wx.NewId()
         ID_CLOSE_TAB = wx.NewId()
+        ID_CLOSE_ALL_BUT = wx.NewId()
+        ID_CLOSE_ALL_TABS = wx.NewId()
         file.Append(ID_SET_DIR, 'Open &Directory\tCtrl+D', 'Open Directory') 
         file.Append(wx.ID_OPEN, 'Open &File\tCtrl+F', 'Open File')
         file.AppendSeparator()
         file.Append(ID_SET_OPTIONS, '&Options\tCtrl+O', 'Options')
         file.AppendSeparator()
-        file.Append(ID_CLOSE_TAB, 'Close &Tab\tCtrl+W', 'Close Tab')
+        file.Append(ID_CLOSE_TAB, 'Close &tab\tCtrl+W', 'Close tab')
+        file.Append(ID_CLOSE_ALL_BUT, 'Close all &but active tab\tCtrl+B', 'Close all but')
+        file.Append(ID_CLOSE_ALL_TABS, 'Close &all tabs\tCtrl+A', 'Close all tabs')
         file.AppendSeparator()
         file.Append(wx.ID_EXIT, '&Quit\tCtrl+Q', 'Quit Application')
         menubar.Append(file, '&File')
@@ -275,6 +279,8 @@ class PhysiologyFrame(PersistentFrame):
         self.Bind(wx.EVT_MENU, self.OnQuit, id=wx.ID_EXIT)
         self.Bind(wx.EVT_MENU, self.OnAbout, id=wx.ID_ABOUT)
         self.Bind(wx.EVT_MENU, self.OnCloseTab, id=ID_CLOSE_TAB)
+        self.Bind(wx.EVT_MENU, self.OnCloseAllBut, id=ID_CLOSE_ALL_BUT)
+        self.Bind(wx.EVT_MENU, self.OnCloseAllTabs, id=ID_CLOSE_ALL_TABS)
         self.Bind(wx.EVT_MENU, self.OnDisplayHelp, id=ID_DISPLAY_HELP)
 
         #Initialize manager and panels
@@ -283,12 +289,13 @@ class PhysiologyFrame(PersistentFrame):
 
         self.__nb = PhysiologyNotebook(self)
 
-        self.help = wx.html.HtmlHelpController(style=
-                wx.html.HF_CONTENTS |
-                wx.html.HF_PRINT |
-                wx.html.HF_MERGE_BOOKS
-                )
-        self.help.AddBook('help/help.hhp')
+        # self.help = wx.html.HtmlHelpController(style=
+        #         wx.html.HF_CONTENTS |
+        #         wx.html.HF_PRINT |
+        #         wx.html.HF_MERGE_BOOKS
+        #         )
+        # self.help.AddBook('help/help.chm')
+        self.helpPath = os.getcwd() + '/help/help.chm'
 
         self.foptions = DefaultValueHolder("PhysiologyNotebook", "file")
         self.foptions.SetVariables(startdir=".")
@@ -315,17 +322,31 @@ class PhysiologyFrame(PersistentFrame):
         self.Show()
         
     def OnDisplayHelp(self, evt):
-        self.help.DisplayContents()
+        # self.help.DisplayContents()
+        os.startfile(self.helpPath)
 
     def OnCloseTab(self, evt):
         self.__nb.DeletePage(self.__nb.GetSelection())
         if sys.platform == 'darwin':
             self.__nb.RemovePage(self.__nb.GetSelection())
 
+    def OnCloseAllBut(self, evt):
+        for k in reversed(range(self.__nb.PageCount)):
+            if k != self.__nb.GetSelection():
+                self.__nb.DeletePage(k)
+                if sys.platform == 'darwin':
+                    self.__nb.RemovePage(k)
+
+    def OnCloseAllTabs(self, evt):
+        for k in reversed(range(self.__nb.PageCount)):
+            self.__nb.DeletePage(k)
+            if sys.platform == 'darwin':
+                self.__nb.RemovePage(k)
+
     def OnAbout(self, evt):
         info = wx.adv.AboutDialogInfo()
         info.Name = "ABR Peak Analysis"
-        info.Version = "1.8.0.74"
+        info.Version = "1.9.0"
         info.Copyright = "(C) 2007 Speech and Hearing Bioscience and Technology"
 #        info.WebSite = "http://web.mit.edu/shbt"
         info.Developers = ["Brad Buran"]
@@ -408,6 +429,10 @@ class PhysiologyOptions(wx.Dialog):
         self.useNoiseFloor = DefaultValueHolder('PhysiologyNotebook','useNoiseFloor')
         self.useNoiseFloor.SetVariables(value=False)
         self.useNoiseFloor.InitFromConfig()
+
+        self.autoRestore = DefaultValueHolder('PhysiologyNotebook','autoRestore')
+        self.autoRestore.SetVariables(value=True)
+        self.autoRestore.InitFromConfig()
 
         filter = self.filter
         file = self.file
@@ -505,6 +530,14 @@ class PhysiologyOptions(wx.Dialog):
         self.nfcb.Bind(wx.EVT_CHOICE, self.OnUseNoiseFloorCheck)
         osizer.Add(self.nfcb, 0, wx.ALL, 5)
 
+        # Auto restore previous analysis
+        label = wx.StaticText(self, wx.ID_ANY, "Auto restore analysis:")
+        osizer.Add(label, 0, wx.ALL, 5)
+        self.arcb = wx.CheckBox(self, wx.ID_ANY)
+        self.arcb.SetValue(self.autoRestore.value)
+        self.arcb.Bind(wx.EVT_CHOICE, self.OnAutoRestoreCheck)
+        osizer.Add(self.arcb, 0, wx.ALL, 5)
+
         line = wx.StaticLine(self, wx.ID_ANY, size=(20,-1), style=wx.LI_HORIZONTAL)
 
         sizer.Add(dsizer, 0, wx.EXPAND|wx.ALL, 5)
@@ -536,6 +569,9 @@ class PhysiologyOptions(wx.Dialog):
     def OnUseNoiseFloorCheck(self, evt):
         self.useNoiseFloor = self.nfcb.GetValue()
 
+    def OnAutoRestoreCheck(self, evt):
+        self.useNoiseFloor = self.arcb.GetValue()
+
     def OnOk(self, evt):
         if self.Validate():
             self.EndModal(wx.ID_OK)
@@ -554,6 +590,8 @@ class PhysiologyOptions(wx.Dialog):
             self.extension.UpdateConfig()
             self.useNoiseFloor.SetVariables(value=self.nfcb.GetValue())
             self.useNoiseFloor.UpdateConfig()
+            self.autoRestore.SetVariables(value=self.arcb.GetValue())
+            self.autoRestore.UpdateConfig()
                         
         
     def Validate(self):
