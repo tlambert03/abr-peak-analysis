@@ -1,4 +1,12 @@
-## Change Log
+## Changelog
+
+### Unreleased
+
+#### Added
+
+- support for data files with comprehensive CFTS headers
+
+---
 
 ### v1.9.0 (2023-08-06)
   
