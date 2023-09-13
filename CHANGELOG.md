@@ -4,7 +4,7 @@
 
 #### Added
 
-- support for data files with comprehensive CFTS headers
+- support for CFTS data files with comprehensive headers
 
 ---
 
