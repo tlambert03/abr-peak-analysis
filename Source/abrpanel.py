@@ -252,6 +252,7 @@ class WaveformPlot(StylePlot):
 
     def invert(self):
         self.y_base = -self.y_base
+        self.y_nbase = -self.y_nbase
         self._scale_plot()
 
     def _scale_plot(self):

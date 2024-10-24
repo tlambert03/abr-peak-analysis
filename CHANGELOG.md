@@ -1,15 +1,14 @@
 ## Changelog
 
-### Unreleased
-
+### v1.10 (2024-10-24)
+#### Fixed
+- fixed bug where it was not possible to invert and normalize the waveforms
 #### Added
-
 - support for CFTS data files with comprehensive headers
 
 ---
 
-### v1.9.0 (2023-08-06)
-  
+### v1.9.0 (2023-08-06)  
 #### Added
 - checkbox on Options gui to automatically restore previous analysis when loading data (default = True)
 - clear analysis using **X** key (restarts from default peak guess)
@@ -18,8 +17,7 @@
  
 ---
 
-### v1.8.0 (2023-07-26)
-  
+### v1.8.0 (2023-07-26) 
 #### Added
 - option to restore previous analysis, using **R** key 
 

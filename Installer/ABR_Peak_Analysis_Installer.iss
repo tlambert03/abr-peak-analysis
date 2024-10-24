@@ -20,7 +20,11 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 
 [Files]
-Source: "..\Source\dist\notebook\*.*"; DestDir: "{app}"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data"; Flags: replacesameversion recursesubdirs; 
+Source: "..\Source\dist\notebook\*.*"; DestDir: "{app}"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data"; Flags: replacesameversion
+Source: "..\Source\dist\notebook\_internal\*.*"; DestDir: "{app}\_internal"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data,\help"; Flags: replacesameversion recursesubdirs
+Source: "..\Source\dist\notebook\_internal\splash.png"; DestDir: "{app}"; Flags: replacesameversion
+Source: "..\Source\dist\notebook\_internal\icon.ico"; DestDir: "{app}"; Flags: replacesameversion
+Source: "..\Source\dist\notebook\_internal\help\*.*"; DestDir: "{app}"; Flags: replacesameversion recursesubdirs
 
 [Icons]
 Name: "{commondesktop}\ABR Peak Analysis"; Filename: "{app}\notebook.exe"; IconFilename: "{app}\icon.ico"; IconIndex: 0
