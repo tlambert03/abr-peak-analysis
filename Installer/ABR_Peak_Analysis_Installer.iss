@@ -1,19 +1,29 @@
-; -- sync.iss --
+; -- ABR_Peak_Analysis_Installer.iss --
 
-; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
-#define verStr GetFileVersion("..\Source\dist\notebook\notebook.exe")
-#define lastDot RPos(".", verStr)
-#define verStr Copy(verStr, 1, lastDot-1)
-#define verStr_ StringChange(verStr, '.', '-')
+; Set the following three variables
+#define buildPath "..\Source\dist\notebook\"
+#define exeName "notebook.exe" ; i.e.: the "Target filename" set in the LabVIEW project explorer
+#define appName "ABR Peak Analysis"    ; this is arbitrary. It controls the install folder location and the desktop shortcut name
+#define iconName "icon.ico"
+
+; In normal use, should not need to edit below here
+
+; Extracts the semantic version from the executable. Only retains the patch number if it is greater than zero.
+#define SemanticVersion() \
+   GetVersionComponents(buildPath + exeName, Local[0], Local[1], Local[2], Local[3]), \
+   Str(Local[0]) + "." + Str(Local[1]) + ((Local[2]>0) ? "." + Str(Local[2]) : "")
+    
+; The installer contains the semantic version number, but replaces the dots with dashes so it doesn't look like a file extension.
+#define installerName StringChange(appName, ' ', '_') + "_" + StringChange(SemanticVersion(), '.', '-')
 
 [Setup]
-AppName=ABR Peak Analysis
-AppVerName=ABR Peak Analysis V{#verStr}
-DefaultDirName={pf}\EPL\ABR Peak Analysis
+AppName={#appName}
+AppVerName={#appName} V{#SemanticVersion}
+DefaultDirName={pf}\EPL\{#appName}
 OutputDir=D:\Development\abr-peak-analysis\Installer\Output
 DefaultGroupName=EPL
 AllowNoIcons=yes
-OutputBaseFilename=ABR_Peak_Analysis_{#verStr_}
+OutputBaseFilename={#installerName}
 UsePreviousAppDir=no
 UsePreviousGroup=no
 DisableProgramGroupPage=yes
@@ -21,10 +31,7 @@ PrivilegesRequired=lowest
 
 [Files]
 Source: "..\Source\dist\notebook\*.*"; DestDir: "{app}"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data"; Flags: replacesameversion
-Source: "..\Source\dist\notebook\_internal\*.*"; DestDir: "{app}\_internal"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data,\help"; Flags: replacesameversion recursesubdirs
-Source: "..\Source\dist\notebook\_internal\splash.png"; DestDir: "{app}"; Flags: replacesameversion
-Source: "..\Source\dist\notebook\_internal\icon.ico"; DestDir: "{app}"; Flags: replacesameversion
-Source: "..\Source\dist\notebook\_internal\help\*.*"; DestDir: "{app}"; Flags: replacesameversion recursesubdirs
+Source: "..\Source\dist\notebook\_internal\*.*"; DestDir: "{app}\_internal"; Excludes: "*.dll.c~,\mpl-data\fonts,\mpl-data\sample_data"; Flags: replacesameversion recursesubdirs
 
 [Icons]
-Name: "{commondesktop}\ABR Peak Analysis"; Filename: "{app}\notebook.exe"; IconFilename: "{app}\icon.ico"; IconIndex: 0
+Name: "{commondesktop}\{#appName}"; Filename: "{app}\notebook.exe"; IconFilename: "{app}\_internal\{#iconName}"; IconIndex: 0

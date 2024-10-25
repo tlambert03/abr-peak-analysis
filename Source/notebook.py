@@ -58,7 +58,7 @@ For more detail on this model, see http://wiki.wxpython.org/ModelViewPresenter/
 # wxPython has a lot of DeprecationWarnings so we ignore these
 import warnings; warnings.simplefilter('ignore', DeprecationWarning)
 
-import sys
+import os, sys
 
 if sys.platform == 'win32':
     import numpy.core._dtype_ctypes # needed for PyInstaller on Windows
@@ -79,8 +79,9 @@ import wx
 
 def normal_mode():
     if sys.platform == 'win32':
-        icon = wx.Icon('icon.ico') # the frame restores the previous folder
-    
+        # icon = wx.Icon('icon.ico') # the frame restores the previous folder
+        iconFile = os.path.join(os.path.dirname(__file__), 'icon.ico')    
+        icon = wx.Icon(iconFile) # the frame restores the previous folder
     x = PhysiologyFrame(title='ABR Notebook',parent=None,splash=True)
     
     if sys.platform == 'win32':
