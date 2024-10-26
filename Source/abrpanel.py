@@ -113,7 +113,8 @@ class PointPlot(StylePlot):
         self.update()
 
     def remove(self):
-        self.figure.lines.remove(self.plot)
+        # self.figure.lines.remove(self.plot)
+        self.plot.remove()
 
     def _getstyle(self):
         val = self.point.point[1]

@@ -1,5 +1,11 @@
 ## Changelog
 
+### unreleased
+#### Fixed 
+- fixed bug using **X** key to clear previous work
+
+---
+
 ### v1.10 (2024-10-24)
 #### Fixed
 - fixed bug where it was not possible to invert and normalize the waveforms
