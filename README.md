@@ -7,13 +7,14 @@ This is the EPL-maintained version of the program originally written by Brad Bur
 [Changelog](CHANGELOG.md)
 
 Minimal Python environment:
+
 ```
-conda create -n abr python=3.9.12
+conda create -n abr -c conda_forge python=3.9.12  nomkl numpy scipy matplotlib wxPython numpy==2.0.2 spyder pyinstaller
 conda activate abr
-conda install -c conda_forge nomkl numpy scipy matplotlib wxPython
-conda install -c conda_forge numpy==2.0.2
-conda install spyder
-conda install pyinstaller
+
+# then clone this repo
+git clone https://github.com/tlambert03/abr-peak-analysis.git
+python Source/notebook.py
 ```
 
 Notes: numpy v2.0.1 has bugs that break bundled apps without a console, e.g.:

@@ -22,7 +22,7 @@ from peakdetect import find_spurious_peaks
 import os
 import operator
 
-from kpy.optimize import power2, sigmoid, smooth
+from kpy.kpy.optimize import power2, sigmoid, smooth
 
 #def Enum(*names):
 #   ##assert names, "Empty enums are not supported" # <- Don't like empty enums? Uncomment!

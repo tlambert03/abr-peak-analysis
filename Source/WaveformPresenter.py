@@ -26,7 +26,7 @@ from filter_EPL_LabVIEW_ABRIO_File import safeopen
 
 from datatype import ThrSource
 
-from kpy.optimize import smooth
+from kpy.kpy.optimize import smooth
 
 #----------------------------------------------------------------------------
 

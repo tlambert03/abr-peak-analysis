@@ -8,7 +8,7 @@ import collections
 import numpy as np
 from scipy.optimize import curve_fit
 
-from kpy.optimize import fitstats
+from . import fitstats
 
 def _compute_params(x, y, b, c):
     u = 1 / (1 + 10**(b*(c-x)))

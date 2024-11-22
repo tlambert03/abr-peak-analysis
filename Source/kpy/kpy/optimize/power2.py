@@ -7,7 +7,7 @@ Created on Mon Mar 19 16:55:35 2018
 import collections
 import numpy as np
 from scipy.optimize import curve_fit
-from kpy.optimize import fitstats
+from . import fitstats
 
 def _compute_params(x, y, b):
     num = np.vstack((x**b, np.ones(x.size))).transpose()
