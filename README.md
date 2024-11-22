@@ -9,7 +9,7 @@ This is the EPL-maintained version of the program originally written by Brad Bur
 Minimal Python environment:
 
 ```
-conda create -n abr -c conda-forge python=3.9.12  nomkl numpy scipy matplotlib wxPython numpy==2.0.2 spyder pyinstaller
+conda create -n abr -c conda-forge python=3.9.12 nomkl scipy matplotlib wxPython numpy==2.0.2 spyder pyinstaller
 conda activate abr
 
 # then clone this repo
