@@ -14,6 +14,7 @@ conda activate abr
 
 # then clone this repo
 git clone https://github.com/tlambert03/abr-peak-analysis.git
+cd abr-peak-analysis
 python Source/notebook.py
 ```
 
